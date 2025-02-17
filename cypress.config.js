@@ -2,6 +2,11 @@ import { defineConfig } from "cypress";
 import vitePreprocessor from "cypress-vite";
 
 export default defineConfig({
+  env: {
+    codeCoverage: {
+      exclude: "cypress/**/*.*"
+    }
+  },
   e2e: {
     experimentalStudio: true,
     baseUrl: 'http://localhost:5173',
@@ -16,6 +21,10 @@ export default defineConfig({
       framework: "react",
       bundler: "vite",
     },
+    setupNodeEvents(on, config) {
+      require('@cypress/code-coverage/task')(on, config) 
+      return config;
+    }
   },
   viewportHeight: 900,
   viewportWidth: 1440
